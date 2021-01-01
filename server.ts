@@ -60,6 +60,8 @@ io.on("connection", function (socket: any) {
 
   socket.on("remove", (word: string) => {
     if (wordlist.includes(word)) {
+      // shshh i cant find the real way to do this
+      wordlist= wordlist.slice(0,wordlist.indexOf(word)).concat(wordlist.slice(wordlist.indexOf(word)+1,wordlist.length))
       socket.emit("err", "removed");
     } else {
       socket.emit("err", "not removed: not in list");
