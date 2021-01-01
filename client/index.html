@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <form id=username>
+
+    </form>
+    <form id=words>
+
+    </form>
+    
+    <input type="text" id="name" />
+    <button onClick="exist(document.getElementById('name').value)">
+      Hit Me
+    </button>
+    <button onClick="setTeam()">Start game</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    <div id="allplayers"></div>
+    <div id="team1"></div>
+    <div id="team2"></div>
+    <div id="game">Your word is:</div>
+    <script>
+      const socket = io("http://localhost:3000");
+      socket.on("addUser", (name) => {
+        console.log(name + " Has Joined!");
+      });
+      // i know its shit but its quick leave me the fuck alone
+      socket.on("err", (code)=>{
+          alert(code);
+      })
+      function exist(username) {
+        console.log(username);
+        socket.emit("exist", username);
+      }
+      function sendMsg() {
+        socket.emit("message", "HELLO WORLD");
+      }
+    </script>
+  </body>
+</html>
