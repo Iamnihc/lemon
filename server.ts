@@ -47,6 +47,7 @@ function startTimer(sec: number) {
 // whenever a user connects on port 3000 via
 // a websocket, log that a user has connected
 io.on("connection", function (socket: any) {
+  var uid = userList.length;
   console.log("a user connected");
 
   socket.on("word", (msg: string) => {
@@ -73,7 +74,9 @@ io.on("connection", function (socket: any) {
     console.log(msg);
     io.emit("addUser", msg);
   });
-  socket.on("disconnect", () => {});
+  socket.on("disconnect", () => {
+    userList
+  });
   socket.on("startGame", (owner:string) => {
     startTimer(60);
     

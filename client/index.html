@@ -8,32 +8,43 @@
   </head>
 
   <body>
-    <form id=username>
-
+    <form id=username onsubmit="exist(document.getElementById('name').value)">
+    <input type="text" id="name" />
+    <input type="submit" value="Join game">
     </form>
     <form id=words>
-
+      <button onClick="setTeam()">Start game</button>
     </form>
+
     
-    <input type="text" id="name" />
-    <button onClick="exist(document.getElementById('name').value)">
-      Hit Me
-    </button>
+
     <button onClick="setTeam()">Start game</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
-    <div id="allplayers"></div>
+    <div id="allplayers">
+      <p id=allNames>
+        Players:
+      </p>
+    </div>
     <div id="team1"></div>
     <div id="team2"></div>
+
+
     <div id="game">Your word is:</div>
+
+
     <script>
       const socket = io("http://localhost:3000");
       socket.on("addUser", (name) => {
         console.log(name + " Has Joined!");
+        document.getElementById("allNames").innerHTML += name + "<br>";
       });
       // i know its shit but its quick leave me the fuck alone
       socket.on("err", (code)=>{
           alert(code);
-      })
+      });
+      socket.on("time", (sec)=>{
+        document.getElementById("leftTime").innerHTML = "Time left: "
+      });
       function exist(username) {
         console.log(username);
         socket.emit("exist", username);
